@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:04:41 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/18 21:58:08 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/19 15:38:33 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@
 # include <mlx.h>
 # include </System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/X.h>
 # define AD mlx->d_addr
-# define RESO_X 1080
-# define RESO_Y 960
+# define RESO_X 540
+# define RESO_Y 460
 # define X1 -2.1
-# define X2 0.6
+# define X2 2.1
 # define Y1 -1.2
 # define Y2 1.2
 # define XO mlx->datas->xold
 # define YO mlx->datas->yold
+# define DX1 mlx->datas->x1
+# define DX2 mlx->datas->x2
+# define DY1 mlx->datas->y1
+# define DY2 mlx->datas->y2
 
 typedef struct		s_datas
 {

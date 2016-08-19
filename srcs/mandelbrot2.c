@@ -6,11 +6,66 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 17:08:03 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/18 21:58:07 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/19 15:59:44 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+unsigned int	mod_color(int i, int iter_max)
+{
+	return (255 - (i % (iter_max / 6)) * (255 / (iter_max/6)));
+}
+
+void	color(t_mlx *mlx, int i, t_rgb rgb, int x, int y)
+{
+	static int cpt = 0;
+	int col;
+	col = i / (mlx->iter_max / 6);
+	if (col == 0)
+	{
+		rgb.r = 255;
+		rgb.g = 255 - (i % (mlx->iter_max / 6)) * (255 / (mlx->iter_max/6));
+		rgb.b = 0;
+	}
+	if (col == 1)
+	{
+		rgb.r = mod_color(i, mlx->iter_max);
+		rgb.g = 255;
+		rgb.b = 0;
+	}
+	if (col == 2)
+	{
+		rgb.r = 0;
+		rgb.g = 255;
+		rgb.r = mod_color(i, mlx->iter_max);
+	}
+	if (col == 3)
+	{
+		rgb.r = 0;
+		rgb.g = mod_color(i, mlx->iter_max);
+		rgb.b = 255;
+	}
+	if (col == 4)
+	{
+		rgb.r = mod_color(i, mlx->iter_max);
+		rgb.g = 0;
+		rgb.b = 255;
+	}
+	if (col == 5)
+	{
+		rgb.r = 255;
+		rgb.g = 0;
+		rgb.b = mod_color(i, mlx->iter_max);
+	}
+/*	else
+	{
+	rgb.r = i * 255 / mlx->iter_max;
+	rgb.g = i * 255 / mlx->iter_max;
+	rgb.b = i * 255 / mlx->iter_max;
+	}*/
+	put_color_to_pixel(mlx, x, y, rgb);
+}
 
 void	do_mandelbrot2(t_mlx *mlx, t_datas *datas)
 {
@@ -40,17 +95,12 @@ void	do_mandelbrot2(t_mlx *mlx, t_datas *datas)
 				++i;
 			}while (z_r * z_r + z_i * z_i < 4 && i < mlx->iter_max);
 			if (i != mlx->iter_max)
-			{
-				rgb.r = i * 255 / mlx->iter_max;
-				rgb.g = i * 255 / mlx->iter_max;
-				rgb.b = i * 255 / mlx->iter_max;
-				put_color_to_pixel(mlx, x, y, rgb);
-			}
+				color(mlx, i, rgb, x, y);
 		}
 	}
 	rgb.r = 255;
 	rgb.g = 255;
 	rgb.b = 0;
-	put_color_to_pixel(mlx, 540, 480, rgb);
+	put_color_to_pixel(mlx, RESO_X / 2, RESO_Y / 2, rgb);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }

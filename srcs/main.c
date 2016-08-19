@@ -6,10 +6,9 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/10 10:54:17 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/18 21:58:06 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/19 15:34:27 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 # include "fractol.h"
 
@@ -33,8 +32,9 @@ int		key_hook(int keycode, void *params)
 
 void	zoom_on(double xm, double ym, t_mlx *mlx)
 {
-	mlx->zoom += 10;
-//	mlx->iter_max++;
+	mlx->zoom *= 1.1;
+	printf("ZOOOM\nnew zoom = %f\n", mlx->zoom);
+	mlx->iter_max += 6;
 	new_datas(mlx, &mlx->datas, xm, ym);
 	mlx_destroy_image(mlx->mlx, mlx->img);
 	do_mandelbrot2(mlx, mlx->datas);
@@ -42,13 +42,13 @@ void	zoom_on(double xm, double ym, t_mlx *mlx)
 
 void	modify_coords(int x, int y, t_mlx *mlx, double*xm, double *ym)
 {
-	/*
-	*xm = (XO / ((X2 - XO) * mlx->zoom / RESO_X)) + x / mlx->zoom;
-	*ym = (YO / ((Y2 - YO) * mlx->zoom / RESO_Y)) + y / mlx->zoom;
+	*xm = (DX1 / ((DX2 - DX1) * mlx->zoom / RESO_X)) + x / mlx->zoom;
+	*ym = (DY1 / ((DY2 - DY1) * mlx->zoom / RESO_Y)) + y / mlx->zoom;
 	printf("before\vxm = %f | ym = %f\n", *xm, *ym);
-	*/
-	*xm = ((*xm - XO) / (X2 - XO) - 0.5) * (RESO_X / (mlx->zoom * (X2 - XO)));
-	*ym = ((*ym - YO) / (Y2 - YO) - 0.5) * (RESO_Y / (mlx->zoom * (Y2 - YO)));
+//	*xm = ((*xm - DX1) / (DX2 - DX1) - 0.5) * (RESO_X / (mlx->zoom * (DX2 - DX1)));
+//	*ym = ((*ym - DY1) / (DY2 - DY1) - 0.5) * (RESO_Y / (mlx->zoom * (DY2 - DY1)));
+//	*xm = *xm * 2;
+//	*ym = *ym * 2;
 	printf("after\vxm = %f | ym = %f\n", *xm, *ym);
 
 }
