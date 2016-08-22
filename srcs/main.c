@@ -38,8 +38,8 @@ void	zoom_on(t_pts pts, t_mlx *mlx)
 	mlx->iter_max += 6;
 	new_datas(mlx, &mlx->datas, pts);
 	mlx_destroy_image(mlx->mlx, mlx->img);
-//	do_mandelbrot2(mlx, mlx->datas);
-	do_julia(mlx, mlx->datas);
+	do_mandelbrot4(mlx, mlx->datas);
+//	do_julia(mlx, mlx->datas);
 }
 
 void	modify_coords(t_pts pts, t_mlx *mlx, double *xm, double *ym)
@@ -63,6 +63,23 @@ int		mouse_hook(int mousecode, int x, int y, void *params)
 	return (0);
 }
 
+void		motion(int x, int y, t_mlx * mlx)
+{
+	mlx->datas->c_r = (double)x / RESO_X * 4 - 2;
+	mlx->datas->c_i = (double)y / RESO_Y * 4 - 2;
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	do_julia(mlx, mlx->datas);
+}
+
+int			motion_mouse(int x, int y, void *params)
+{
+if (x >= 0 && y >= 0 && x <= RESO_X && y <= RESO_Y
+		/*&& e->stop_motioni*/)
+		printf("keycode = %d\n", x);
+		motion(x, y, (t_mlx *)params);
+		return (1);
+}
+
 int		main(int ac, char **av)
 {
 	if (ac == 1)
@@ -74,9 +91,11 @@ int		main(int ac, char **av)
 	t_datas *datas;
 	mlx = initialize_mlx();
 	mlx->datas = init_datas(mlx);
-//	do_mandelbrot2(mlx, mlx->datas);
-	do_julia(mlx, mlx->datas);
+//	do_mandelbrot4(mlx, mlx->datas);
+//	do_julia(mlx, mlx->datas);
+	sierpinski_init(mlx);
 	mlx_key_hook(mlx->win, key_hook, mlx);
 	mlx_mouse_hook(mlx->win, mouse_hook, mlx);
+//	mlx_hook(mlx->win, 6, (1L << 6), motion_mouse, mlx);
 	mlx_loop(mlx->mlx);
 }

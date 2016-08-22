@@ -26,19 +26,21 @@ void	do_julia(t_mlx *mlx, t_datas *datas)
 	{
 		for (unsigned int y = 0; y < image_y && y < RESO_Y; y++)
 		{
-			double c_r = 0.285;
-			double c_i = 0.01;
 			double z_r = x / mlx->zoom + datas->x1;
 			double z_i = y / mlx->zoom + datas->y1;
 			unsigned int i = 0;
 			do {
 				double tmp = z_r;
-				z_r = z_r * z_r - z_i * z_i + c_r;
-				z_i = 2 * z_i * tmp + c_i;
+				z_r = z_r * z_r - z_i * z_i + datas->c_r;
+				z_i = 2 * z_i * tmp + datas->c_i;
 				++i;
 			}while (z_r * z_r + z_i * z_i < 4 && i < mlx->iter_max);
 			if (i != mlx->iter_max)
+			{
+//				rgb.r = i * 255 / mlx->iter_max;
+//				put_color_to_pixel(mlx, x, y, rgb);
 				color(mlx, i, rgb, x, y);
+			}
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);

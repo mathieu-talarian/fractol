@@ -44,6 +44,8 @@ typedef struct		s_pts
 
 typedef struct		s_datas
 {
+	double		c_r;
+	double		c_i;
 	double		x1;
 	double		x2;
 	double		y1;
@@ -83,7 +85,10 @@ int					main(int ac, char **av);
 */
 void				do_mandelbrot(t_mlx *mlx);
 void				do_mandelbrot2(t_mlx *mlx, t_datas *datas);
+void				do_mandelbrot3(t_mlx *mlx, t_datas *datas);
+void				do_mandelbrot4(t_mlx *mlx, t_datas *datas);
 void				do_julia(t_mlx *mlx, t_datas *datas);
+void				sierpinski_init(t_mlx *mlx);
 
 t_datas				*init_datas(t_mlx *mlx);
 void		new_datas(t_mlx *mlx, t_datas **ll, t_pts pts);
@@ -95,4 +100,11 @@ void				put_color_to_pixel(t_mlx *mlx, int x, int y, t_rgb rgb);
 */
 
 void	color(t_mlx *mlx, int i, t_rgb rgb, int x, int y);
+
+/*
+**maths
+*/
+double		carre(double x);
+double		cube(double x);
+double		p_4(double x);
 #endif

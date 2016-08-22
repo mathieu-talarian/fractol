@@ -21,7 +21,7 @@ t_mlx		*initialize_mlx(void)
 	mlx->win = mlx_new_window(mlx->mlx, RESO_X, RESO_Y, \
 			"fractol");
 	mlx->zoom = 100;
-	mlx->iter_max = 180;
+	mlx->iter_max = 24;
 	return (mlx);
 }
 
@@ -33,8 +33,10 @@ t_datas		*init_datas(t_mlx *mlx)
 	datas->xold = X1;
 	datas->yold = Y1;
 	datas->zoomold = mlx->zoom;
-	datas-> x1 = JX1 / ((JX2 - JX1) * mlx->zoom / RESO_X);
-	datas-> x2 = JX2 / ((JX2 - JX1) * mlx->zoom / RESO_X);
+	datas->c_r = 0.285;
+	datas->c_i = 0.01;
+	datas-> x1 = X1 / ((X2 - X1) * mlx->zoom / RESO_X);
+	datas-> x2 = X2 / ((X2 - X1) * mlx->zoom / RESO_X);
 	datas-> y1 = Y1 / ((Y2 - Y1) * mlx->zoom / RESO_Y);
 	datas-> y2 = Y2  / ((Y2 - Y1) * mlx->zoom / RESO_Y);
 	return (datas);
