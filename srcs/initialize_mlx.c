@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:14:07 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/19 16:26:37 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/22 17:48:42 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,46 @@ t_mlx		*initialize_mlx(void)
 
 	mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, RESO_X, RESO_Y, "fractol");
+	mlx->win = mlx_new_window(mlx->mlx, RESO_X, RESO_Y, \
+			"fractol");
 	mlx->zoom = 100;
-	mlx->iter_max = 24;
+	mlx->iter_max = 180;
 	return (mlx);
 }
 
 t_datas		*init_datas(t_mlx *mlx)
 {
 	t_datas *datas;
+
 	datas = (t_datas *)malloc(sizeof(t_datas));
 	datas->xold = X1;
 	datas->yold = Y1;
-	datas-> x1 = X1 / ((X2 - X1) * mlx->zoom / RESO_X);
-	datas-> x2 = X2 /  ((X2 - X1) * mlx->zoom / RESO_X);
+	datas->zoomold = mlx->zoom;
+	datas-> x1 = JX1 / ((JX2 - JX1) * mlx->zoom / RESO_X);
+	datas-> x2 = JX2 / ((JX2 - JX1) * mlx->zoom / RESO_X);
 	datas-> y1 = Y1 / ((Y2 - Y1) * mlx->zoom / RESO_Y);
 	datas-> y2 = Y2  / ((Y2 - Y1) * mlx->zoom / RESO_Y);
-	printf("===>datas\n[x1 = %f| x2 = %f]\n", datas->x1, datas->x2);
-	printf("===>datas\n[y1 = %f| y2 = %f]\n", datas->y1, datas->y2);
 	return (datas);
 }
 
-void		new_datas(t_mlx *mlx, t_datas **ll, double xm, double ym)
+void		new_datas(t_mlx *mlx, t_datas **ll, t_pts pts)
 {
 	t_datas *datas;
+	double	new_width;
+	double	new_height;
+
 	datas = *ll;
+	new_width = (datas->zoomold / mlx->zoom) * \
+				(datas->x2 - datas->x1);
+	new_height = (datas->zoomold / mlx->zoom) * \
+				 (datas->y2 - datas->y1);
 	datas->xold = datas->x1;
 	datas->yold = datas->y1;
-	datas->x1 = xm + (X1 / ((X2 - X1) * mlx->zoom / RESO_X));
-	datas->y1 = ym + (Y1 / ((Y2 - Y1) * mlx->zoom / RESO_Y));
-	datas->y2 = ym + (Y2  / ((Y2 - Y1) * mlx->zoom / RESO_Y));
-	printf("===>datas\n[x1 = %f| x2 = %f]\n", datas->x1, datas->x2);
-	printf("===>datas\n[y1 = %f| y2 = %f]\n", datas->y1, datas->y2);
-	
+	datas->zoomold = mlx->zoom;
+	datas->x1 = pts.map_x - pts.window_x * \
+				(new_width / RESO_X);
+	datas->x2 = datas->x1 + new_width;
+	datas->y1 = pts.map_y - pts.window_y * \
+				(new_height / RESO_Y);
+	datas->y2 = datas->y1 + new_height;
 }

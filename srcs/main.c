@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/10 10:54:17 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/19 16:26:43 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/22 17:58:04 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	zoom_more(t_mlx *mlx)
 //	mlx->iter_max++;
 	mlx_destroy_image(mlx->mlx, mlx->img);
 	do_mandelbrot2(mlx, mlx->datas);
+//	do_julia(mlx, mlx->datas);
 }
 
 int		key_hook(int keycode, void *params)
@@ -30,38 +31,35 @@ int		key_hook(int keycode, void *params)
 	return (0);
 }
 
-void	zoom_on(double xm, double ym, t_mlx *mlx)
+void	zoom_on(t_pts pts, t_mlx *mlx)
 {
 	mlx->zoom *= 1.1;
 	printf("ZOOOM\nnew zoom = %f\n", mlx->zoom);
 	mlx->iter_max += 6;
-	new_datas(mlx, &mlx->datas, xm, ym);
+	new_datas(mlx, &mlx->datas, pts);
 	mlx_destroy_image(mlx->mlx, mlx->img);
-	do_mandelbrot2(mlx, mlx->datas);
+//	do_mandelbrot2(mlx, mlx->datas);
+	do_julia(mlx, mlx->datas);
 }
 
-void	modify_coords(int x, int y, t_mlx *mlx, double*xm, double *ym)
+void	modify_coords(t_pts pts, t_mlx *mlx, double *xm, double *ym)
 {
-	*xm = (DX1 / ((DX2 - DX1) * mlx->zoom / RESO_X)) + x / mlx->zoom;
-	*ym = (DY1 / ((DY2 - DY1) * mlx->zoom / RESO_Y)) + y / mlx->zoom;
-	printf("before\vxm = %f | ym = %f\n", *xm, *ym);
-//	*xm = ((*xm - DX1) / (DX2 - DX1) - 0.5) * (RESO_X / (mlx->zoom * (DX2 - DX1)));
-//	*ym = ((*ym - DY1) / (DY2 - DY1) - 0.5) * (RESO_Y / (mlx->zoom * (DY2 - DY1)));
-//	*xm = *xm * 2;
-//	*ym = *ym * 2;
-	printf("after\vxm = %f | ym = %f\n", *xm, *ym);
-
+	*xm = (DX1 / ((DX2 - DX1) * mlx->zoom / RESO_X)) + \
+		  pts.window_x / mlx->zoom;
+	*ym = (DY1 / ((DY2 - DY1) * mlx->zoom / RESO_Y)) + \
+		  pts.window_y / mlx->zoom;
 }
 
 int		mouse_hook(int mousecode, int x, int y, void *params)
 {
-	double xm;
-	double ym;
+	t_pts pts;
 
-	printf("==>keycode = %d | x = %d | y = %d<==\n", mousecode, x, y);
-	modify_coords(x, y, (t_mlx *)params, &xm, &ym);
+	pts.window_x = x;
+	pts.window_y = y;
+	modify_coords(pts, (t_mlx *)params, \
+			&pts.map_x, &pts.map_y);
 	if (mousecode == 5)
-		zoom_on(xm, ym, (t_mlx *)params);
+		zoom_on(pts, (t_mlx *)params);
 	return (0);
 }
 
@@ -76,7 +74,8 @@ int		main(int ac, char **av)
 	t_datas *datas;
 	mlx = initialize_mlx();
 	mlx->datas = init_datas(mlx);
-	do_mandelbrot2(mlx, mlx->datas);
+//	do_mandelbrot2(mlx, mlx->datas);
+	do_julia(mlx, mlx->datas);
 	mlx_key_hook(mlx->win, key_hook, mlx);
 	mlx_mouse_hook(mlx->win, mouse_hook, mlx);
 	mlx_loop(mlx->mlx);
