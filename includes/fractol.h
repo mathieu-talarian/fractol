@@ -18,6 +18,8 @@
 # include <math.h>
 # include <mlx.h>
 # include </System/Library/Frameworks/Tk.framework/Versions/8.5/Headers/X11/X.h>
+# include <errno.h>
+# include <sys/types.h>
 # define AD mlx->d_addr
 # define RESO_X 540
 # define RESO_Y 480
@@ -159,10 +161,12 @@ int					key_press(int mousecode, int x, int y, void *params);
 int					key_release(int mousecode, int x, int y, void *params);
 void				motion(int x, int y, t_mlx *mlx);
 int					motion_mouse(int x, int y, void *params);
+int					movement_hook(int keycode, void *params);
 int					key_hook(int keycode, void *params);
 
 void				zoom_on(t_pts pts, t_mlx *mlx);
 void				zoom_off(t_pts pts, t_mlx *mlx);
+void				redraw_key_position(t_mlx *mlx, int keycode);
 
 int					mouse_hook(int mousecode, int x, int y, void *params);
 
@@ -173,7 +177,13 @@ void				modify_coords(t_pts pts, t_mlx *mlx, double *xm, \
 		double *ym);
 void				new_datas(t_mlx *mlx, t_datas **ll, t_pts pts);
 
-void				try_to_redraw(t_mlx *mlx, void (*funct)(void *));
+void				try_to_redraw(t_mlx *mlx);
 void				draw(t_mlx *mlx, void (*funct)(void *));
+
+/*
+**fork
+*/
+int					fractol_fork(char **av);
+int					check_fractale(char *name);
 
 #endif

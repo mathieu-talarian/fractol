@@ -11,23 +11,12 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <errno.h>
-#include <sys/types.h>
 
 int		no_file(void)
 {
 	ft_putstr("Usage : ./fractol <fractale>\n\t-Mandelbrot");
 	ft_putendl("(2 - 3 - 4)\n\t-Julia\n\t-Boat");
 	return (0);
-}
-
-pid_t create_process(void)
-{
-pid_t pid;
-	do {
-		pid = fork();
-	} while ((pid == -1) && (errno == EAGAIN));
-	return pid;
 }
 
 int		check_fractale(char *name)
@@ -42,35 +31,6 @@ int		check_fractale(char *name)
 		tab = tab->next;
 	}
 	return (0);
-}
-
-void	do_fork(int pid, char *name, int (*f)(char *))
-{
-	printf("%d\n", pid);
-	f(name);
-}
-
-int		fractol_fork(char **av)
-{
-	pid_t pid;
-
-	pid = create_process();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(0);
-	}
-	else if (pid == 0)
-	{
-		do_fork(0, av[2], check_fractale);
-		exit(0);
-	}
-	else
-	{
-		do_fork(pid, av[1], check_fractale);
-		exit (1);
-	}
-	return (1);
 }
 
 int		main(int ac, char **av)

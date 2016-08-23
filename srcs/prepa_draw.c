@@ -22,4 +22,8 @@ void	prepa_draw(void *params)
 			&mlx->endian);
 	draw(mlx, mlx->funct);
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_string_put(mlx->mlx, mlx->win, 0, 0, 16777215, \
+	"changement de couleurs : pave numerique");
+	mlx_string_put(mlx->mlx, mlx->win, 0, 20, 16777215, \
+	"page_up <=> page_down");
 }

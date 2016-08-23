@@ -23,6 +23,10 @@ int			key_press(int mousecode, int x, int y, void *params)
 
 int			key_release(int mousecode, int x, int y, void *params)
 {
+	int x1;
+	int y1;
+	x1 = x;
+	y1 = y;
 	if (mousecode == 1)
 		rd((t_mlx *)params, 0);
 	return (0);
@@ -32,7 +36,7 @@ void		motion(int x, int y, t_mlx *mlx)
 {
 	mlx->datas->c_r = (double)x / RESO_X * 4 - 2;
 	mlx->datas->c_i = (double)y / RESO_Y * 4 - 2;
-	try_to_redraw(mlx, mlx->funct);
+	try_to_redraw(mlx);
 }
 
 int			motion_mouse(int x, int y, void *params)

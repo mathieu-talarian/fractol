@@ -17,14 +17,16 @@ void	zoom_on(t_pts pts, t_mlx *mlx)
 	mlx->zoom *= 1.1;
 	mlx->iter_max += 6;
 	new_datas(mlx, &mlx->datas, pts);
-	try_to_redraw(mlx, mlx->funct);
+	try_to_redraw(mlx);
 }
 
 void	zoom_off(t_pts pts, t_mlx *mlx)
 {
-	mlx->zoom /= 1.1;
 	if (mlx->iter_max - 6 > 0)
+	{
 		mlx->iter_max -= 6;
+		mlx->zoom /= 1.1;
+	}
 	new_datas(mlx, &mlx->datas, pts);
-	try_to_redraw(mlx, mlx->funct);
+	try_to_redraw(mlx);
 }

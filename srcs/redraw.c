@@ -17,7 +17,7 @@ void		draw(t_mlx *mlx, void (*funct)(void *))
 	funct(mlx);
 }
 
-void		try_to_redraw(t_mlx *mlx, void (*funct)(void *))
+void		try_to_redraw(t_mlx *mlx)
 {
 	mlx_destroy_image(mlx->mlx, mlx->img);
 	prepa_draw(mlx);
@@ -29,5 +29,5 @@ void		rd(t_mlx *mlx, int a)
 		mlx->tt = 1;
 	else if (a == 0)
 		mlx->tt = 0;
-	try_to_redraw(mlx, mlx->funct);
+	try_to_redraw(mlx);
 }

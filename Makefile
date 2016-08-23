@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = fractol
-CC = gcc #-Wall -Werror -Wextra#
+CC = gcc -Wall -Werror -Wextra#
 MLX = -lmlx -framework openGL -framework AppKit -L./minilibx_macos -I./minilibx_macos
 LIB = -lft -L./libft
 LIBI = -I./libft

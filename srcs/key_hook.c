@@ -12,6 +12,13 @@
 
 #include "fractol.h"
 
+int		movement_hook(int keycode, void *params)
+{
+	if (123 <= keycode && keycode <= 126)
+		redraw_key_position((t_mlx *)params, keycode);
+	return (0);
+}
+
 void	change_colors(int keycode, t_mlx *mlx)
 {
 	if (0 < mlx->color_style && mlx->color_style < 5)
@@ -29,7 +36,7 @@ void	change_colors(int keycode, t_mlx *mlx)
 	}
 	else
 		mlx->color_style = 1;
-	try_to_redraw(mlx, mlx->funct);
+	try_to_redraw(mlx);
 }
 
 int		key_hook(int keycode, void *params)
@@ -40,7 +47,7 @@ int		key_hook(int keycode, void *params)
 	if (keycode >= 83 && keycode <= 88)
 	{
 		mlx->color_style = keycode;
-		try_to_redraw(mlx, mlx->funct);
+		try_to_redraw(mlx);
 	}
 	if (keycode == 121 || keycode == 116)
 		change_colors(keycode, mlx);
