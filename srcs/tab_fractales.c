@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 12:41:52 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 16:05:53 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/23 17:50:49 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_fract		*fract_lstnew(char *name, void (*funct)(void *))
 {
 	t_fract *new;
+
 	if (!(new = (t_fract *)malloc(sizeof(*new))))
 		return (NULL);
 	else
@@ -52,5 +53,5 @@ t_fract		*tab_fractales(void)
 	lst_add(&tab, fract_lstnew("Mandelbrot4", &do_mandelbrot4));
 	lst_add(&tab, fract_lstnew("Julia", do_julia));
 	lst_add(&tab, fract_lstnew("Boat", &do_boat));
-	return(tab);
+	return (tab);
 }

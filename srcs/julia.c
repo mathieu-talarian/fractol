@@ -6,40 +6,47 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/22 17:31:08 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 16:37:02 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/23 19:14:59 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+void	calculs_julia(t_mlx *mlx, t_iter iter)
+{
+	iter.z_r = iter.x / mlx->zoom + mlx->datas->x1;
+	iter.z_i = iter.y / mlx->zoom + mlx->datas->y1;
+	iter.i = 0;
+	while (carre(iter.z_r) + carre(iter.z_i) < 4 && iter.i < mlx->iter_max)
+	{
+		iter.tmp = iter.z_r;
+		iter.z_r = carre(iter.z_r) - carre(iter.z_i) + mlx->datas->c_r;
+		iter.z_i = 2 * iter.z_i * iter.tmp + mlx->datas->c_i;
+		++iter.i;
+	}
+	if (iter.i != mlx->iter_max)
+		init_color(mlx, iter);
+}
+
 void	do_julia(void *params)
 {
-	t_mlx *mlx;
+	t_mlx	*mlx;
+	t_iter	iter;
+
 	mlx = params;
-	mlx->img = mlx_new_image(mlx->mlx, RESO_X, RESO_Y);
-	mlx->d_addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->sizeline, &mlx->endian);
-	t_rgb	rgb;
-	rgb.r = 0;
-	rgb.g = 0;
-	rgb.b = 0;
-	unsigned int image_x = ((mlx->datas->x2 - mlx->datas->x1) * mlx->zoom);
-	unsigned int image_y = ((mlx->datas->y2 - mlx->datas->y1) * mlx->zoom);
-	for (unsigned int x = 0; x < image_x && x < RESO_X; x++)
+	iter.image_x = ((mlx->datas->x2 - mlx->datas->x1) * mlx->zoom);
+	iter.image_y = ((mlx->datas->y2 - mlx->datas->y1) * mlx->zoom);
+	iter.x = 0;
+	iter.y = 0;
+	while (iter.x < iter.image_x && iter.x < RESO_X)
 	{
-		for (unsigned int y = 0; y < image_y && y < RESO_Y; y++)
+		iter.y = 0;
+		while (iter.y < iter.image_y && iter.y < RESO_Y)
 		{
-			double z_r = x / mlx->zoom + mlx->datas->x1;
-			double z_i = y / mlx->zoom + mlx->datas->y1;
-			unsigned int i = 0;
-			do {
-				double tmp = z_r;
-				z_r = z_r * z_r - z_i * z_i + mlx->datas->c_r;
-				z_i = 2 * z_i * tmp + mlx->datas->c_i;
-				++i;
-			}while (z_r * z_r + z_i * z_i < 4 && i < mlx->iter_max);
-			if (i != mlx->iter_max)
-				init_color(mlx, i, x, y);
+			calculs_julia(mlx, iter);
+			iter.y++;
 		}
+		iter.x++;
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }

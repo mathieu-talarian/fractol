@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:04:41 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 16:39:03 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/23 19:44:02 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define DX2 mlx->datas->x2
 # define DY1 mlx->datas->y1
 # define DY2 mlx->datas->y2
-
+# define ABS(x) ((x) < 0 ? (x * - 1) : (x))
 
 typedef void		(*t_funct)(void *);
 
@@ -82,7 +82,6 @@ typedef struct		s_rgb
 	unsigned int	b;
 }					t_rgb;
 
-
 typedef struct		s_fract
 {
 	char			*name;
@@ -90,18 +89,36 @@ typedef struct		s_fract
 	struct s_fract	*next;
 }					t_fract;
 
+typedef struct		s_iter
+{
+	unsigned int	image_x;
+	unsigned int	image_y;
+	unsigned int	x;
+	unsigned int	y;
+	double			z_r;
+	double			z_i;
+	double			c_i;
+	double			c_r;
+	unsigned int	i;
+	double			tmp;
+}					t_iter;
 
+typedef struct		s_col
+{
+	int				a;
+	int				b;
+}					t_col;
 
 t_mlx				*initialize_mlx(void);
 
 int					main(int ac, char **av);
 t_fract				*tab_fractales(void);
-void	do_it(void (*funct)(void *));
-
+void				do_it(void (*funct)(void *));
 
 /*
 ** figures
 */
+void				prepa_draw(void *params);
 void				do_mandelbrot2(void *params);
 void				do_mandelbrot3(void *params);
 void				do_mandelbrot4(void *params);
@@ -109,46 +126,54 @@ void				do_julia(void *params);
 void				do_boat(void *params);
 
 t_datas				*init_datas(t_mlx *mlx);
-void				put_color_to_pixel(t_mlx *mlx, int x, int y, t_rgb rgb);
-
 
 /*
 ** color
 */
 
-void	color(t_mlx *mlx, int i, t_rgb *rgb, int x, int y);
-void	init_color(t_mlx *mlx, int i, int x, int y);
+void				color(t_mlx *mlx, t_iter iter, t_rgb *rgb);
+void				init_color(t_mlx *mlx, t_iter iter);
+void				put_color_to_pixel1(t_mlx *mlx, int x, int y, t_rgb rgb);
+void				put_color_to_pixel2(t_mlx *mlx, int x, int y, t_rgb rgb);
+void				put_color_to_pixel3(t_mlx *mlx, int x, int y, t_rgb rgb);
+void				put_color_to_pixel4(t_mlx *mlx, int x, int y, t_rgb rgb);
+void				make_colors(t_col col, unsigned int *r, unsigned int *g,\
+		unsigned int *b);
+unsigned int		mod_color(int i, int iter_max);
+void				make_colors2(int color_style, t_rgb *rgb, t_iter \
+		iter, int iter_max);
+void				col(unsigned int *color, t_iter iter, int iter_max);
 
 /*
 **maths
 */
-double		carre(double x);
-double		cube(double x);
-double		p_4(double x);
+double				carre(double x);
+double				cube(double x);
+double				p_4(double x);
 
 /*
 **hooks
 */
-void		rd(t_mlx *mlx, int a);
-int			key_press(int mousecode, int x, int y, void *params);
-int			key_release(int mousecode, int x, int y, void *params);
-void		motion(int x, int y, t_mlx * mlx);
-int			motion_mouse(int x, int y, void *params);
-int			key_hook(int keycode, void *params);
+void				rd(t_mlx *mlx, int a);
+int					key_press(int mousecode, int x, int y, void *params);
+int					key_release(int mousecode, int x, int y, void *params);
+void				motion(int x, int y, t_mlx *mlx);
+int					motion_mouse(int x, int y, void *params);
+int					key_hook(int keycode, void *params);
 
-void	zoom_on(t_pts pts, t_mlx *mlx);
-void	zoom_off(t_pts pts, t_mlx *mlx);
+void				zoom_on(t_pts pts, t_mlx *mlx);
+void				zoom_off(t_pts pts, t_mlx *mlx);
 
-int		mouse_hook(int mousecode, int x, int y, void *params);
+int					mouse_hook(int mousecode, int x, int y, void *params);
 
 /*
 **calculs coords zoom
 */
+void				modify_coords(t_pts pts, t_mlx *mlx, double *xm, \
+		double *ym);
+void				new_datas(t_mlx *mlx, t_datas **ll, t_pts pts);
 
-void	modify_coords(t_pts pts, t_mlx *mlx, double *xm, double *ym);
-void		new_datas(t_mlx *mlx, t_datas **ll, t_pts pts);
-
-
-void		try_to_redraw(t_mlx *mlx, void (*funct)(void *));
+void				try_to_redraw(t_mlx *mlx, void (*funct)(void *));
+void				draw(t_mlx *mlx, void (*funct)(void *));
 
 #endif

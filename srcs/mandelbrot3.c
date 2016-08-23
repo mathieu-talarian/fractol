@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot2.c                                      :+:      :+:    :+:   */
+/*   mandelbrot3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/23 18:43:54 by mmoullec          #+#    #+#             */
+/*   Created: 2016/08/23 18:45:20 by mmoullec          #+#    #+#             */
 /*   Updated: 2016/08/23 19:09:57 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	calculs_mandelbrot2(t_mlx *mlx, t_iter iter)
+void	calculs_mandelbrot3(t_mlx *mlx, t_iter iter)
 {
 	iter.c_r = (iter.x / mlx->zoom) + mlx->datas->x1;
 	iter.c_i = (iter.y / mlx->zoom) + mlx->datas->y1;
@@ -22,15 +22,15 @@ void	calculs_mandelbrot2(t_mlx *mlx, t_iter iter)
 	while (carre(iter.z_r) + carre(iter.z_i) < 4 && iter.i < mlx->iter_max)
 	{
 		iter.tmp = iter.z_r;
-		iter.z_r = carre(iter.z_r) - carre(iter.z_i) + iter.c_r;
-		iter.z_i = 2 * iter.z_i * iter.tmp + iter.c_i;
+		iter.z_r = cube(iter.z_r) - (3 * iter.z_r * carre(iter.z_i)) + iter.c_r;
+		iter.z_i = (3 * carre(iter.tmp) * iter.z_i) - cube(iter.z_i) + iter.c_i;
 		++iter.i;
 	}
 	if (iter.i != mlx->iter_max)
 		init_color(mlx, iter);
 }
 
-void	do_mandelbrot2(void *params)
+void	do_mandelbrot3(void *params)
 {
 	t_mlx	*mlx;
 	t_iter	iter;
@@ -45,7 +45,7 @@ void	do_mandelbrot2(void *params)
 		iter.y = 0;
 		while (iter.y < iter.image_y && iter.y < RESO_Y)
 		{
-			calculs_mandelbrot2(mlx, iter);
+			calculs_mandelbrot3(mlx, iter);
 			iter.y++;
 		}
 		iter.x++;

@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.c                                             :+:      :+:    :+:   */
+/*   prepa_draw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/23 17:42:25 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 17:43:07 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 17:53:41 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 19:14:06 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double			carre(double x)
+void	prepa_draw(void *params)
 {
-	return (x * x);
-}
+	t_mlx *mlx;
 
-double			cube(double x)
-{
-	return (x * x * x);
-}
-
-double			p_4(double x)
-{
-	return (x * x * x * x);
+	mlx = params;
+	mlx->img = mlx_new_image(mlx->mlx, RESO_X, RESO_Y);
+	mlx->d_addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->sizeline, \
+			&mlx->endian);
+	draw(mlx, mlx->funct);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 }

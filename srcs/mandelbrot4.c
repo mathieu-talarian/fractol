@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot2.c                                      :+:      :+:    :+:   */
+/*   mandelbrot4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/23 18:43:54 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 19:09:57 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 18:27:24 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 19:15:46 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	calculs_mandelbrot2(t_mlx *mlx, t_iter iter)
+void	calculs_mandelbrot4(t_mlx *mlx, t_iter iter)
 {
 	iter.c_r = (iter.x / mlx->zoom) + mlx->datas->x1;
 	iter.c_i = (iter.y / mlx->zoom) + mlx->datas->y1;
@@ -22,15 +22,17 @@ void	calculs_mandelbrot2(t_mlx *mlx, t_iter iter)
 	while (carre(iter.z_r) + carre(iter.z_i) < 4 && iter.i < mlx->iter_max)
 	{
 		iter.tmp = iter.z_r;
-		iter.z_r = carre(iter.z_r) - carre(iter.z_i) + iter.c_r;
-		iter.z_i = 2 * iter.z_i * iter.tmp + iter.c_i;
+		iter.z_r = p_4(iter.z_r) - (6 * carre(iter.z_r) * carre(iter.z_i)) + \
+			p_4(iter.z_i) + iter.c_r;
+		iter.z_i = (4 * cube(iter.tmp) * iter.z_i) - (4 * iter.tmp * \
+			cube(iter.z_i)) + iter.c_i;
 		++iter.i;
 	}
 	if (iter.i != mlx->iter_max)
 		init_color(mlx, iter);
 }
 
-void	do_mandelbrot2(void *params)
+void	do_mandelbrot4(void *params)
 {
 	t_mlx	*mlx;
 	t_iter	iter;
@@ -45,7 +47,7 @@ void	do_mandelbrot2(void *params)
 		iter.y = 0;
 		while (iter.y < iter.image_y && iter.y < RESO_Y)
 		{
-			calculs_mandelbrot2(mlx, iter);
+			calculs_mandelbrot4(mlx, iter);
 			iter.y++;
 		}
 		iter.x++;

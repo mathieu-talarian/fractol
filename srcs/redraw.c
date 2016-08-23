@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.c                                             :+:      :+:    :+:   */
+/*   redraw.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/23 17:42:25 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 17:43:07 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 17:46:39 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 19:14:06 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double			carre(double x)
+void		draw(t_mlx *mlx, void (*funct)(void *))
 {
-	return (x * x);
+	funct(mlx);
 }
 
-double			cube(double x)
+void		try_to_redraw(t_mlx *mlx, void (*funct)(void *))
 {
-	return (x * x * x);
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	prepa_draw(mlx);
 }
 
-double			p_4(double x)
+void		rd(t_mlx *mlx, int a)
 {
-	return (x * x * x * x);
+	if (a == 1)
+		mlx->tt = 1;
+	else if (a == 0)
+		mlx->tt = 0;
+	try_to_redraw(mlx, mlx->funct);
 }

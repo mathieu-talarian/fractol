@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/22 17:27:58 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 16:39:04 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/23 19:51:35 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,86 +14,63 @@
 
 unsigned int	mod_color(int i, int iter_max)
 {
-	return (255 - (i % (iter_max / 6)) * (255 / (iter_max/6)));
+	return (255 - (i % (iter_max / 6)) * (255 / (iter_max / 6)));
 }
 
-void	col(unsigned int *color, int i, int x, int y, int iter_max)
+void			color(t_mlx *mlx, t_iter iter, t_rgb *rgb)
 {
-	*color = i * 255 / iter_max;
+	t_col	datas_col;
+	int		col;
+
+	col = iter.i / (mlx->iter_max / 6);
+	datas_col.a = iter.i;
+	datas_col.b = mlx->iter_max;
+	if (col == 0)
+		make_colors(datas_col, &rgb->r, &rgb->g, &rgb->b);
+	if (col == 1)
+		make_colors(datas_col, &rgb->g, &rgb->r, &rgb->b);
+	if (col == 2)
+		make_colors(datas_col, &rgb->g, &rgb->b, &rgb->r);
+	if (col == 3)
+		make_colors(datas_col, &rgb->r, &rgb->g, &rgb->b);
+	if (col == 4)
+		make_colors(datas_col, &rgb->b, &rgb->g, &rgb->r);
+	if (col == 5)
+		make_colors(datas_col, &rgb->r, &rgb->b, &rgb->g);
 }
 
-void	init_color(t_mlx *mlx, int i, int x, int y)
+void			col(unsigned int *color, t_iter iter, int iter_max)
+{
+	*color = iter.i * 255 / iter_max;
+}
+
+void			log_color(t_mlx *mlx, t_iter iter)
+{
+	t_rgb rgb;
+
+	color(mlx, iter, &rgb);
+	if (mlx->color_style == 1)
+		put_color_to_pixel1(mlx, iter.x, iter.y, rgb);
+	else if (mlx->color_style == 2)
+		put_color_to_pixel2(mlx, iter.x, iter.y, rgb);
+	else if (mlx->color_style == 3)
+		put_color_to_pixel3(mlx, iter.x, iter.y, rgb);
+	else if (mlx->color_style == 4)
+		put_color_to_pixel4(mlx, iter.x, iter.y, rgb);
+}
+
+void			init_color(t_mlx *mlx, t_iter iter)
 {
 	t_rgb rgb;
 
 	rgb.r = 0;
 	rgb.g = 0;
 	rgb.b = 0;
-	if (mlx->color_style == 83)
-		col(&rgb.r, i, x, y, mlx->iter_max);
-	else if (mlx->color_style == 84)
-		col(&rgb.g, i, x, y, mlx->iter_max);
-	else if (mlx->color_style == 85)
-		col(&rgb.b, i, x, y, mlx->iter_max);
-	else if (mlx->color_style == 86)
-	{
-		col(&rgb.r, i, x, y, mlx->iter_max);
-		col(&rgb.g, i, x, y, mlx->iter_max);
-	}
-	else if (mlx->color_style == 87)
-	{
-		col(&rgb.r, i, x, y, mlx->iter_max);
-		col(&rgb.b, i, x, y, mlx->iter_max);
-	}
-	else if (mlx->color_style == 88)
-	{
-		col(&rgb.b, i, x, y, mlx->iter_max);
-		col(&rgb.g, i, x, y, mlx->iter_max);
-	}
+	if (1 <= mlx->color_style && mlx->color_style <= 4)
+		log_color(mlx, iter);
 	else
-		color(mlx, i, &rgb, x, y);
-	put_color_to_pixel(mlx, x, y, rgb);
-}
-
-void	color(t_mlx *mlx, int i, t_rgb *rgb, int x, int y)
-{
-	int col;
-
-	col = i / (mlx->iter_max / 6);
-	if (col == 0)
 	{
-		rgb->r = 255;
-		rgb->g = mod_color(i, mlx->iter_max);
-		rgb->b = 0;
-	}
-	if (col == 1)
-	{
-		rgb->r = mod_color(i, mlx->iter_max);
-		rgb->g = 255;
-		rgb->b = 0;
-	}
-	if (col == 2)
-	{
-		rgb->r = 0;
-		rgb->g = 255;
-		rgb->r = mod_color(i, mlx->iter_max);
-	}
-	if (col == 3)
-	{
-		rgb->r = 0;
-		rgb->g = mod_color(i, mlx->iter_max);
-		rgb->b = 255;
-	}
-	if (col == 4)
-	{
-		rgb->r = mod_color(i, mlx->iter_max);
-		rgb->g = 0;
-		rgb->b = 255;
-	}
-	if (col == 5)
-	{
-		rgb->r = 255;
-		rgb->g = 0;
-		rgb->b = mod_color(i, mlx->iter_max);
+		make_colors2(mlx->color_style, &rgb, iter, mlx->iter_max);
+		put_color_to_pixel1(mlx, iter.x, iter.y, rgb);
 	}
 }
