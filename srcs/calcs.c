@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   calcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/31 17:55:36 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 12:45:02 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 14:46:06 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 16:30:18 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+void	modify_coords(t_pts pts, t_mlx *mlx, double *xm, double *ym)
 {
-	if (new)
-	{
-		new->next = *alst;
-		*alst = new;
-	}
+	*xm = (DX1 / ((DX2 - DX1) * mlx->zoom / RESO_X)) + \
+		  pts.window_x / mlx->zoom;
+	*ym = (DY1 / ((DY2 - DY1) * mlx->zoom / RESO_Y)) + \
+		  pts.window_y / mlx->zoom;
 }

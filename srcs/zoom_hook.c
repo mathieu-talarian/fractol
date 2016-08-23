@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   zoom_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/31 17:55:36 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 12:45:02 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 14:43:05 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 16:30:14 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+void	zoom_on(t_pts pts, t_mlx *mlx)
 {
-	if (new)
-	{
-		new->next = *alst;
-		*alst = new;
-	}
+	mlx->zoom *= 1.1;
+	mlx->iter_max += 6;
+	new_datas(mlx, &mlx->datas, pts);
+	try_to_redraw(mlx, mlx->funct);
+}
+
+void	zoom_off(t_pts pts, t_mlx *mlx)
+{
+	mlx->zoom /= 1.1;
+	if (mlx->iter_max - 6 > 0)
+		mlx->iter_max -= 6;
+	new_datas(mlx, &mlx->datas, pts);
+	try_to_redraw(mlx, mlx->funct);
 }

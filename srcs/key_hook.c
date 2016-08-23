@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/31 17:55:36 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 12:45:02 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 14:39:27 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 16:39:02 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+int		key_hook(int keycode, void *params)
 {
-	if (new)
+	t_mlx *mlx;
+
+	mlx = params;
+	printf("%d\n", keycode);
+	if ((keycode >= 83 && keycode <= 88) || keycode == 6)
 	{
-		new->next = *alst;
-		*alst = new;
+		mlx->color_style = keycode;
+		try_to_redraw(mlx, mlx->funct);
 	}
+	if (keycode == 53)
+		exit (0);
+	return (0);
 }
+

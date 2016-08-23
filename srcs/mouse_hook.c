@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/31 17:55:36 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 12:45:02 by mmoullec         ###   ########.fr       */
+/*   Created: 2016/08/23 14:44:54 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/23 16:29:25 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+int		mouse_hook(int mousecode, int x, int y, void *params)
 {
-	if (new)
-	{
-		new->next = *alst;
-		*alst = new;
-	}
+	t_pts pts;
+
+	pts.window_x = x;
+	pts.window_y = y;
+	modify_coords(pts, (t_mlx *)params, \
+			&pts.map_x, &pts.map_y);
+	if (mousecode == 5)
+		zoom_on(pts, (t_mlx *)params);
+	else if (mousecode == 4)
+		zoom_off(pts, (t_mlx *)params);
+	return (0);
 }

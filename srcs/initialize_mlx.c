@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:14:07 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/22 17:48:42 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/23 16:26:36 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_mlx		*initialize_mlx(void)
 			"fractol");
 	mlx->zoom = 100;
 	mlx->iter_max = 24;
+	mlx->tt = 0;
+	mlx->color_style = 6;
 	return (mlx);
 }
 
