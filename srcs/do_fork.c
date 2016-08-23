@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-pid_t create_process(void)
+pid_t	create_process(void)
 {
 pid_t pid;
 	do {
@@ -11,7 +11,7 @@ pid_t pid;
 
 void	do_fork(int pid, char *name, int (*f)(char *))
 {
-	printf("%d\n", pid);
+	ft_putnbr_fd(pid, 3);
 	f(name);
 }
 
