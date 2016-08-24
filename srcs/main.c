@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 12:30:18 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 16:05:50 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/24 13:02:33 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		no_file(void)
 {
-	ft_putstr("Usage : ./fractol <fractale>\n\t-Mandelbrot");
+	ft_putstr("Usage : ./fractol <fractale> <fractale>\n\t-Mandelbrot");
 	ft_putendl("(2 - 3 - 4)\n\t-Julia\n\t-Boat");
 	return (0);
 }
@@ -38,7 +38,7 @@ int		main(int ac, char **av)
 	if (ac == 2)
 	{
 		if (!check_fractale(av[1]))
-		return (no_file());
+			return (no_file());
 	}
 	if (ac == 1)
 		return (no_file());

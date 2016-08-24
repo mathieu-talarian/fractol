@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 14:36:38 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 17:48:20 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/08/24 12:51:48 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			key_release(int mousecode, int x, int y, void *params)
 {
 	int x1;
 	int y1;
+
 	x1 = x;
 	y1 = y;
 	if (mousecode == 1)

@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_fork.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/08/24 12:50:25 by mmoullec          #+#    #+#             */
+/*   Updated: 2016/08/24 12:51:23 by mmoullec         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
 
 pid_t	create_process(void)
 {
-pid_t pid;
-	do {
+	pid_t pid;
+
+	pid = fork();
+	while ((pid == -1) && (errno == EAGAIN))
 		pid = fork();
-	} while ((pid == -1) && (errno == EAGAIN));
-	return pid;
+	return (pid);
 }
 
 void	do_fork(int pid, char *name, int (*f)(char *))
@@ -33,7 +46,7 @@ int		fractol_fork(char **av)
 	else
 	{
 		do_fork(pid, av[1], check_fractale);
-		exit (1);
+		exit(1);
 	}
 	return (1);
 }

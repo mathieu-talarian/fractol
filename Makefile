@@ -6,7 +6,7 @@
 #    By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/17 15:21:44 by mmoullec          #+#    #+#              #
-#    Updated: 2016/08/23 14:28:30 by mmoullec         ###   ########.fr        #
+#    Updated: 2016/08/24 13:06:13 by mmoullec         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,53 @@ MLX = -lmlx -framework openGL -framework AppKit -L./minilibx_macos -I./minilibx_
 LIB = -lft -L./libft
 LIBI = -I./libft
 INC = -I./includes
-SRCS = ./srcs/*.c
+SRC_DIR = ./srcs/
+SRCS = ./mandelbrot3.c\
+	   ./mouse_hook.c\
+	   ./main.c\
+	   ./prepa_draw.c\
+	   ./make_colors.c\
+	   ./zoom_hook.c\
+	   ./redraw.c\
+	   ./mandelbrot2.c\
+	   ./math.c\
+	   ./motion_hook.c\
+	   ./put_color_to_pixel.c\
+	   ./boat.c\
+	   ./calcs.c\
+	   ./key_hook.c\
+	   ./initialize_mlx.c\
+	   ./julia.c\
+	   ./mandelbrot4.c\
+	   ./color.c\
+	   ./do_it.c\
+	   ./tab_fractales.c\
+	   ./do_fork.c\
+	   ./redraw_key_position.c\
 
-all:
-	$(CC) -o $(NAME) $(SRCS) $(MLX) $(LIB) $(LIBI) $(INC)
+OBJ_FILES = $(SRCS:.c=.o)
 
-run: all
-	./fractol julia
+all: $(NAME)
+
+$(NAME): $(OBJ_FILES)
+	@make -C libft
+	@echo "lib"
+	@$(CC) -o $(NAME) $^ $(OBJ) $(INC) $(LIB) $(MLX)
+	@echo "file Created"
+
+%.o: $(SRC_DIR)%.c
+	@$(CC) $(INC) -o $@ -c $< $(LIBI)
+
+clean:
+	@make clean -C libft
+	@rm $(OBJ_FILES)
+	@echo "clean ok"
+
+fclean: clean
+	@make fclean -C libft
+	@rm $(NAME)
+	@echo "fclean ok"
+
+re: fclean all
+
+.PHONY: all clean fclean re
