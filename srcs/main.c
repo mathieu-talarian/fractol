@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 12:30:18 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 17:29:36 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 18:14:49 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int		main(int ac, char **av)
 	if (ac == 1 || ac > 3)
 		return (no_file());
 	if (ac == 3)
-	{
 		fractol_fork(av, &tab);
-	}
 	return (0);
 }

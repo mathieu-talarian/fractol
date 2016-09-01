@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 12:50:25 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 17:29:35 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 18:16:19 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ int		usage(char *name)
 void	do_fork(int pid, char *name, int (*f)(t_fract **, char *), t_fract **tab)
 {
 	ft_putnbr_fd(pid, 3);
-	if(!f(tab, name))
-	{
+	if (!f(tab, name))
 		usage(name);
-		exit(0);
-	}
+	exit(0);
 }
 
 int		fractol_fork(char **av, t_fract **tab)
