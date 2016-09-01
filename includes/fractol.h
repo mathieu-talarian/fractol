@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:04:41 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/23 19:52:48 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 17:28:35 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,10 @@ void				draw(t_mlx *mlx, void (*funct)(void *));
 /*
 **fork
 */
-int					fractol_fork(char **av);
-int					check_fractale(char *name);
+int					fractol_fork(char **av, t_fract **tab);
+int					check_fractale(t_fract **tab, char *name);
+
+int					no_file();
+int					usage(char *name);
 
 #endif

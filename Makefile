@@ -6,12 +6,12 @@
 #    By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/17 15:21:44 by mmoullec          #+#    #+#              #
-#    Updated: 2016/08/24 13:06:13 by mmoullec         ###   ########.fr        #
+#    Updated: 2016/09/01 13:39:01 by mmoullec         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
-CC = gcc -Wall -Werror -Wextra#
+CC = gcc -Wall -Werror -Wextra
 MLX = -lmlx -framework openGL -framework AppKit -L./minilibx_macos -I./minilibx_macos
 LIB = -lft -L./libft
 LIBI = -I./libft
@@ -45,8 +45,10 @@ OBJ_FILES = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
+	@echo "make libft"
 	@make -C libft
-	@echo "lib"
+	@echo "make minilibx_macos"
+	@make -C minilibx_macos
 	@$(CC) -o $(NAME) $^ $(OBJ) $(INC) $(LIB) $(MLX)
 	@echo "file Created"
 

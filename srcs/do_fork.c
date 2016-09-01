@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 12:50:25 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/24 12:51:23 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 17:29:35 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,26 @@ pid_t	create_process(void)
 	return (pid);
 }
 
-void	do_fork(int pid, char *name, int (*f)(char *))
+int		usage(char *name)
 {
-	ft_putnbr_fd(pid, 3);
-	f(name);
+	ft_putstr("Le nom : ");
+	ft_putstr(name);
+	ft_putendl(" ne fonctionne pas");
+	no_file();
+	return (0);
 }
 
-int		fractol_fork(char **av)
+void	do_fork(int pid, char *name, int (*f)(t_fract **, char *), t_fract **tab)
+{
+	ft_putnbr_fd(pid, 3);
+	if(!f(tab, name))
+	{
+		usage(name);
+		exit(0);
+	}
+}
+
+int		fractol_fork(char **av, t_fract **tab)
 {
 	pid_t pid;
 
@@ -40,12 +53,12 @@ int		fractol_fork(char **av)
 	}
 	else if (pid == 0)
 	{
-		do_fork(0, av[2], check_fractale);
+		do_fork(0, av[2], check_fractale, tab);
 		exit(0);
 	}
 	else
 	{
-		do_fork(pid, av[1], check_fractale);
+		do_fork(pid, av[1], check_fractale, tab);
 		exit(1);
 	}
 	return (1);

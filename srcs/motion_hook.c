@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 14:36:38 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/24 12:51:48 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 12:42:10 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			key_press(int mousecode, int x, int y, void *params)
 {
 	if (mousecode == 1)
-		rd((t_mlx *)params, 1);
+		rd((t_mlx *)params, 0);
 	if (mousecode == 5 || mousecode == 4)
 		mouse_hook(mousecode, x, y, params);
 	return (0);
@@ -29,7 +29,7 @@ int			key_release(int mousecode, int x, int y, void *params)
 	x1 = x;
 	y1 = y;
 	if (mousecode == 1)
-		rd((t_mlx *)params, 0);
+		rd((t_mlx *)params, 1);
 	return (0);
 }
 

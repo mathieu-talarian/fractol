@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 12:30:18 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/08/24 13:02:33 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/01 17:29:36 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int		no_file(void)
 	return (0);
 }
 
-int		check_fractale(char *name)
+int		check_fractale(t_fract **ll, char *name)
 {
 	t_fract *tab;
 
-	tab = tab_fractales();
+	tab = *ll;
 	while (tab->next)
 	{
 		if (ft_strcmp(name, tab->name) == 0)
@@ -33,16 +33,37 @@ int		check_fractale(char *name)
 	return (0);
 }
 
+int		check_multi(t_fract **ll, char **av)
+{
+	t_fract *tab;
+	int i;
+
+	tab = *ll;
+	i = 1;
+	while (av[i])
+	{
+		if (ft_strcmp(av[i], tab->name))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int		main(int ac, char **av)
 {
+	t_fract *tab;
+
+	tab = tab_fractales();
 	if (ac == 2)
 	{
-		if (!check_fractale(av[1]))
-			return (no_file());
+		if (!check_fractale(&tab, av[1]))
+			return (usage(av[1]) && no_file());
 	}
-	if (ac == 1)
+	if (ac == 1 || ac > 3)
 		return (no_file());
 	if (ac == 3)
-		fractol_fork(av);
+	{
+		fractol_fork(av, &tab);
+	}
 	return (0);
 }
