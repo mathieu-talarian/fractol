@@ -6,13 +6,13 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 17:53:41 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 13:13:41 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:11:05 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	prepa_draw(void *params)
+int		prepa_draw(void *params)
 {
 	t_mlx *mlx;
 
@@ -26,4 +26,5 @@ void	prepa_draw(void *params)
 	"changement de couleurs : pave numerique");
 	mlx_string_put(mlx->mlx, mlx->win, 0, 20, 16777215, \
 	"page_up <=> page_down");
+	return (0);
 }

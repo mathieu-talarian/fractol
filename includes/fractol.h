@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/09 14:04:41 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 17:28:35 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:13:16 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void				do_it(void (*funct)(void *));
 /*
 ** figures
 */
-void				prepa_draw(void *params);
+int					prepa_draw(void *params);
 void				do_mandelbrot2(void *params);
 void				do_mandelbrot3(void *params);
 void				do_mandelbrot4(void *params);
@@ -189,4 +189,5 @@ int					check_fractale(t_fract **tab, char *name);
 int					no_file();
 int					usage(char *name);
 
+int					to_re(t_mlx *mlx);
 #endif

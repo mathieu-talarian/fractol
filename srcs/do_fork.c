@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 12:50:25 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 18:16:19 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:13:01 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		usage(char *name)
 	return (0);
 }
 
-void	do_fork(int pid, char *name, int (*f)(t_fract **, char *), t_fract **tab)
+void	do_fork(int pid, char *name, int (*f)(t_fract **, char *), \
+		t_fract **tab)
 {
 	ft_putnbr_fd(pid, 3);
 	if (!f(tab, name))

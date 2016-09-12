@@ -6,7 +6,7 @@
 /*   By: mmoullec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/23 12:30:18 by mmoullec          #+#    #+#             */
-/*   Updated: 2016/09/01 18:14:49 by mmoullec         ###   ########.fr       */
+/*   Updated: 2016/09/12 18:12:04 by mmoullec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		check_fractale(t_fract **ll, char *name)
 	t_fract *tab;
 
 	tab = *ll;
-	while (tab->next)
+	while (tab)
 	{
 		if (ft_strcmp(name, tab->name) == 0)
 			do_it(tab->funct);
@@ -35,8 +35,8 @@ int		check_fractale(t_fract **ll, char *name)
 
 int		check_multi(t_fract **ll, char **av)
 {
-	t_fract *tab;
-	int i;
+	t_fract	*tab;
+	int		i;
 
 	tab = *ll;
 	i = 1;
